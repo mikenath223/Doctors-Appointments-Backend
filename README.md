@@ -21,3 +21,9 @@ cd doctors-appointment-booking-backend
 ```
 
 ### 2. Create a Config Folder and Add Firebase Config
+
+- 1. At the root of the project, create a new folder named config.
+
+```sh
+mkdir config
+```
