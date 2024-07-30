@@ -64,7 +64,7 @@ This command will start all the cloud functions on different ports: - `findManyD
 
 ### 5. Directory Structure
 
-- You can start all functions simultaneously using the following command:
+- This is the directory structure for the booking backend application:
 
 ```sh
 bookings-backend/
