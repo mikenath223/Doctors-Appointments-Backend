@@ -5,7 +5,11 @@ export const buildFirestoreQuery = (
   options: FindMany
 ) => {
   if (options.search) {
-    query = query.where("name", "==", options.search);
+    const searchText = options.search;
+    query = query
+      .orderBy("name")
+      .startAt(searchText)
+      .endAt(searchText + "\uf8ff");
   }
 
   if (options.sort) {

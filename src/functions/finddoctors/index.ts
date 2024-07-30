@@ -64,6 +64,7 @@ functions.http("findManyDoctors", async (req: Request, res: Response) => {
 
       res.status(200).json(doctorsWithAvailability);
     } catch (error: any) {
+      console.log(error);
       res.status(500).send("Internal Server Error");
     }
   });

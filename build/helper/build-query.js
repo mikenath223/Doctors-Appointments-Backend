@@ -3,7 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildFirestoreQuery = void 0;
 const buildFirestoreQuery = (query, options) => {
     if (options.search) {
-        query = query.where("name", "==", options.search);
+        const searchText = options.search;
+        query = query
+            .orderBy("name")
+            .startAt(searchText)
+            .endAt(searchText + "\uf8ff");
     }
     if (options.sort) {
         options.sort.forEach((sortField) => {
