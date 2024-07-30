@@ -27,8 +27,10 @@ cd doctors-appointment-booking-backend
 ```sh
 mkdir config
 ```
+
 - Inside the config folder, paste fir-auth-311de-firebase-adminsdk-fydl1-322530e84e.json file inside the config folder
 - The configuration should look like this:
+
 ```sh
 {
   "type": "service_account",
@@ -45,24 +47,25 @@ mkdir config
 ```
 
 ### 3. Install Dependencies
+
 ```sh
 npm install
 ```
 
 ### 4. Start the Application
+
 - You can start all functions simultaneously using the following command:
+
 ```sh
 npm run start:all
 ```
- This command will start all the cloud functions on different ports:
-    - `findManyDoctors` on port 8080
-    - `getDoctorDetails` on port 8081
-    - `bookAppointment` on port 8082
-    - `getAppointments` on port 8083
-    
+
+This command will start all the cloud functions on different ports: - `findManyDoctors` on port 8080 - `getDoctorDetails` on port 8081 - `bookAppointment` on port 8082 - `getAppointments` on port 8083
+
 ### 5. Directory Structure
 
 - You can start all functions simultaneously using the following command:
+
 ```sh
 bookings-backend/
 ├── build/
@@ -90,3 +93,37 @@ bookings-backend/
 ├── runFactories.js
 └── tsconfig.json
 ```
+
+## Function Descriptions
+
+### findManyDoctors
+
+**Path:** `src/functions/finddoctors`
+
+**Description:**
+
+This function is responsible for fetching a list of doctors from the database. It can support various query parameters to filter and sort the list of doctors based on criteria such as specialization, location, availability, and more.
+
+### getDoctorDetails
+
+**Path:** `src/functions/getdoctorsdetails`
+
+**Description:**
+
+This function fetches detailed information about a specific doctor. It takes a doctor ID as input and returns comprehensive details about the doctor, including their profile, qualifications, specialties, available time slots, and patient reviews.
+
+### bookAppointment
+
+**Path:** `src/functions/bookappointment`
+
+**Description:**
+
+This function handles booking appointments with doctors. It accepts details such as the patient’s information, chosen time slot, and any specific requirements. It checks the availability of the doctor for the requested time slot and confirms the booking if the slot is available, otherwise, it returns an appropriate error message.
+
+### getAppointments
+
+**Path:** `src/functions/fetchappointments`
+
+**Description:**
+
+This function retrieves all appointments for a specific patient or doctor. It can be filtered by date, status (upcoming, past, canceled), and other relevant criteria. This allows users to view their scheduled appointments and manage them accordingly.
