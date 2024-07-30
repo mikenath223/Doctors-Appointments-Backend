@@ -23,6 +23,7 @@ export interface UserInterface {
   role: USER_TYPE;
   profileInfo: ProfileInfoInterface;
   specialty: string;
+  address: string;
   createdAt: string;
   updatedAt: string;
 }

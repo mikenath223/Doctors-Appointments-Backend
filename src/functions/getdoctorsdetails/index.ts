@@ -2,7 +2,10 @@ import * as functions from "@google-cloud/functions-framework";
 import { Request, Response } from "express";
 import { firestore } from "../../firebase";
 import { DoctorsAvailability } from "../../interfaces/doctors-availability.interface";
-import { UserInterface, USER_TYPE } from "../../interfaces/user.interface";
+import { UserInterface } from "../../interfaces/user.interface";
+import cors from "cors";
+
+const corsHandler = cors({ origin: true });
 
 const getAllAvailableSlots = async (doctorId: string) => {
   const availabilitySnapshot = await firestore
@@ -25,37 +28,42 @@ const getAllAvailableSlots = async (doctorId: string) => {
 };
 
 functions.http("getDoctorDetails", async (req: Request, res: Response) => {
-  const doctorId: string = req.query.id as string;
+  corsHandler(req, res, async () => {
+    const doctorId: string = req.query.id as string;
 
-  if (!doctorId) {
-    res.status(400).json({ msg: "Doctor ID is required" });
-    return;
-  }
-
-  try {
-    const doctorDocPromise = firestore.collection("users").doc(doctorId).get();
-    const availabilityPromise = getAllAvailableSlots(doctorId);
-
-    const [doctorDoc, availability] = await Promise.all([
-      doctorDocPromise,
-      availabilityPromise,
-    ]);
-
-    if (!doctorDoc.exists) {
-      res.status(404).send({ msg: "Doctor not found" });
+    if (!doctorId) {
+      res.status(400).json({ msg: "Doctor ID is required" });
       return;
     }
 
-    const doctorData: UserInterface = doctorDoc.data() as UserInterface;
+    try {
+      const doctorDocPromise = firestore
+        .collection("users")
+        .doc(doctorId)
+        .get();
+      const availabilityPromise = getAllAvailableSlots(doctorId);
 
-    const doctorWithAvailability = {
-      ...doctorData,
-      availability,
-    };
+      const [doctorDoc, availability] = await Promise.all([
+        doctorDocPromise,
+        availabilityPromise,
+      ]);
 
-    res.status(200).json(doctorWithAvailability);
-  } catch (error) {
-    console.error("Error fetching doctor details with availability:", error);
-    res.status(500).json({ msg: "Internal Server Error" });
-  }
+      if (!doctorDoc.exists) {
+        res.status(404).send({ msg: "Doctor not found" });
+        return;
+      }
+
+      const doctorData: UserInterface = doctorDoc.data() as UserInterface;
+
+      const doctorWithAvailability = {
+        ...doctorData,
+        availability,
+      };
+
+      res.status(200).json(doctorWithAvailability);
+    } catch (error) {
+      console.error("Error fetching doctor details with availability:", error);
+      res.status(500).json({ msg: "Internal Server Error" });
+    }
+  });
 });

@@ -4,8 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production npx tsc -w",
-    "start:run": "cross-env NODE_ENV=production nodemon -r dotenv/config build/server.js",
     "dev": "concurrently \"npx tsc --watch \" \"nodemon -q ./build/server.js\" ",
     "start": "cross-env NODE_ENV=production node -r dotenv/config build/server.js",
     "factory:generate": "npx tsc && node runFactories.js",
