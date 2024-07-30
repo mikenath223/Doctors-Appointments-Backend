@@ -54,6 +54,12 @@ npm install
 ```sh
 npm run start:all
 ```
+ This command will start all the cloud functions on different ports:
+    - `findManyDoctors` on port 8080
+    - `getDoctorDetails` on port 8081
+    - `bookAppointment` on port 8082
+    - `getAppointments` on port 8083
+    
 ### 5. Directory Structure
 
 - You can start all functions simultaneously using the following command:
@@ -68,16 +74,19 @@ bookings-backend/
 ├── config/
 │   └── fir-auth-311de-firebase-adminsdk-fydl1-322530e84e.json
 ├── src/
-│   └── functions/
-│       ├── finddoctors/
-│       ├── getdoctorsdetails/
-│       ├── bookappointment/
-│       └── fetchappointments/
+│   ├── functions/
+│   │   ├── bookappointment/
+│   │   ├── fetchappointments/
+│   │   ├── finddoctors/
+│   │   └── getdoctorsdetails/
+│   ├── helper/
+│   ├── factories/
+│   └── interfaces/
 ├── .gitignore
 ├── .env
-├── package.lock.json
+├── package-lock.json
 ├── package.json
-└── README.md
-└── runFactories.js
+├── README.md
+├── runFactories.js
 └── tsconfig.json
 ```
