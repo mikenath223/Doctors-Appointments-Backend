@@ -27,8 +27,8 @@ cd doctors-appointment-booking-backend
 ```sh
 mkdir config
 ```
-- Inside the config folder, create a file named firebase-config.json.
-
+- Inside the config folder, paste fir-auth-311de-firebase-adminsdk-fydl1-322530e84e.json file inside the config folder
+- The configuration should look like this:
 ```sh
 {
   "type": "service_account",
@@ -42,5 +42,42 @@ mkdir config
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/your-client-email@your-project-id.iam.gserviceaccount.com"
 }
+```
 
+### 3. Install Dependencies
+```sh
+npm install
+```
+
+### 4. Start the Application
+- You can start all functions simultaneously using the following command:
+```sh
+npm run start:all
+```
+### 5. Directory Structure
+
+- You can start all functions simultaneously using the following command:
+```sh
+bookings-backend/
+├── build/
+│   └── functions/
+│       ├── finddoctors/
+│       ├── getdoctorsdetails/
+│       ├── bookappointment/
+│       └── fetchappointments/
+├── config/
+│   └── fir-auth-311de-firebase-adminsdk-fydl1-322530e84e.json
+├── src/
+│   └── functions/
+│       ├── finddoctors/
+│       ├── getdoctorsdetails/
+│       ├── bookappointment/
+│       └── fetchappointments/
+├── .gitignore
+├── .env
+├── package.lock.json
+├── package.json
+└── README.md
+└── runFactories.js
+└── tsconfig.json
 ```
