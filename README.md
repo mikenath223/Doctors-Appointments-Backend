@@ -102,7 +102,7 @@ bookings-backend/
 
 **Description:**
 
-This function is responsible for fetching a list of doctors from the database. It can support various query parameters to filter and sort the list of doctors based on criteria such as specialization, location, availability, and more.
+This function is responsible for fetching a list of doctors from the database. It can support various parameters to paginate, search and sort the list of doctors based on criteria such as name etc.
 
 ### getDoctorDetails
 
@@ -126,4 +126,4 @@ This function handles booking appointments with doctors. It accepts details such
 
 **Description:**
 
-This function retrieves all appointments for a specific patient or doctor. It can be filtered by date, status (upcoming, past, canceled), and other relevant criteria. This allows users to view their scheduled appointments and manage them accordingly.
+This function retrieves all appointments for a specific patient or doctor. It can be filtered status (upcoming, past, canceled), and other relevant criteria. This allows users to view their scheduled appointments and manage them accordingly.
