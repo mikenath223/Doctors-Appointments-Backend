@@ -6,4 +6,5 @@ var USER_TYPE;
     USER_TYPE["superAdmin"] = "SUPER_ADMIN";
     USER_TYPE["user"] = "USER";
     USER_TYPE["doctor"] = "DOCTOR";
+    USER_TYPE["mockProfile"] = "MOCK_PROFILE";
 })(USER_TYPE || (exports.USER_TYPE = USER_TYPE = {}));

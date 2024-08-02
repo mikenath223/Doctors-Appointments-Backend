@@ -2,6 +2,7 @@ export enum USER_TYPE {
   superAdmin = "SUPER_ADMIN",
   user = "USER",
   doctor = "DOCTOR",
+  mockProfile = "MOCK_PROFILE",
 }
 
 export interface ProfileInfoInterface {
@@ -27,3 +28,5 @@ export interface UserInterface {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface UserProfileInterface extends Partial<UserInterface> {}
