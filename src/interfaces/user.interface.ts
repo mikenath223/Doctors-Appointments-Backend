@@ -25,8 +25,10 @@ export interface UserInterface {
   profileInfo: ProfileInfoInterface;
   specialty: string;
   address: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: any;
+  updatedAt: any;
 }
 
-export interface UserProfileInterface extends Partial<UserInterface> {}
+export interface UserProfileInterface extends Partial<UserInterface> {
+  isUserDependentAdded?: boolean;
+}

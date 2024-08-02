@@ -15,7 +15,8 @@ functions.http(
   "findManyMockUserProfiles",
   async (req: Request, res: Response) => {
     corsHandler(req, res, async () => {
-      const options: FindMany = req.body;
+      const { userId, limit, offset } = req.body;
+      const options: FindMany = { limit, offset };
 
       try {
         let query: FirebaseFirestore.Query = firestore
@@ -24,13 +25,27 @@ functions.http(
 
         query = buildFirestoreQuery(query, options);
 
+        const userDependentsSnapshot = await firestore
+          .collection("user-dependents")
+          .where("userId", "==", userId)
+          .get();
+        const userDependents = userDependentsSnapshot.docs.map((doc) =>
+          doc.data()
+        );
+
+        const userDependentIds = new Set(userDependents.map((user) => user.id));
+
         const mockUsersProfileSnapshot = await query.get();
         const mockUsersProfiles = await Promise.all(
           mockUsersProfileSnapshot.docs.map(async (doc) => {
             const mockUserData: UserProfileInterface =
               doc.data() as UserProfileInterface;
+            const isUserDependentAdded = userDependentIds.has(mockUserData.id);
 
-            return mockUserData;
+            return {
+              ...mockUserData,
+              isUserDependentAdded,
+            };
           })
         );
 

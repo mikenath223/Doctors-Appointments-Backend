@@ -44,11 +44,6 @@ functions.http("getAppointments", async (req, res) => {
                 appointmentsRef = appointmentsRef.where("status", "==", status);
             }
             const appointmentsSnapshot = await appointmentsRef.get();
-            if (appointmentsSnapshot.empty) {
-                return res.status(404).json({
-                    msg: "No appointments found",
-                });
-            }
             const appointments = [];
             const doctorIds = new Set();
             appointmentsSnapshot.forEach((doc) => {
