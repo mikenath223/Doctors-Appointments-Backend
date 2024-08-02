@@ -28,10 +28,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.firestore = void 0;
 const admin = __importStar(require("firebase-admin"));
-const fir_auth_311de_firebase_adminsdk_fydl1_322530e84e_json_1 = __importDefault(require("../config/fir-auth-311de-firebase-adminsdk-fydl1-322530e84e.json"));
+const doctors_appointments_5c875_firebase_adminsdk_tkla1_9715807370_json_1 = __importDefault(require("../config/doctors-appointments-5c875-firebase-adminsdk-tkla1-9715807370.json"));
 admin.initializeApp({
-    credential: admin.credential.cert(fir_auth_311de_firebase_adminsdk_fydl1_322530e84e_json_1.default),
-    databaseURL: "https://fir-auth-311de.firebaseio.com",
+    credential: admin.credential.cert(doctors_appointments_5c875_firebase_adminsdk_tkla1_9715807370_json_1.default),
 });
 const firestore = admin.firestore();
 exports.firestore = firestore;
