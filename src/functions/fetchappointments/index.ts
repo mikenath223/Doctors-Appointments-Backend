@@ -1,9 +1,22 @@
 import * as functions from "@google-cloud/functions-framework";
 import { Request, Response } from "express";
 import { firestore } from "../../firebase";
-import { Appointments } from "../../interfaces/bookings.interface";
+import {
+  APPOINTMENT_STATUS,
+  Appointments,
+} from "../../interfaces/bookings.interface";
 import { UserInterface } from "../../interfaces/user.interface";
 import cors from "cors";
+
+const updateCompletedAppointment = (appointment: Appointments) => {
+  const currentDate = new Date();
+  const appointmentDate = new Date(appointment.date + "T" + appointment.time);
+  if (appointmentDate < currentDate) {
+    return APPOINTMENT_STATUS.completed;
+  }
+
+  return appointment.status;
+};
 
 const corsHandler = cors({ origin: true });
 
@@ -50,6 +63,7 @@ functions.http("getAppointments", async (req: Request, res: Response) => {
 
       const appointmentsWithDoctors = appointments.map((appointment) => ({
         ...appointment,
+        status: updateCompletedAppointment(appointment),
         doctor: doctors[appointment.doctorId],
       }));
 

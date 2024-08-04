@@ -28,7 +28,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = __importStar(require("@google-cloud/functions-framework"));
 const firebase_1 = require("../../firebase");
+const bookings_interface_1 = require("../../interfaces/bookings.interface");
 const cors_1 = __importDefault(require("cors"));
+const updateCompletedAppointment = (appointment) => {
+    const currentDate = new Date();
+    const appointmentDate = new Date(appointment.date + "T" + appointment.time);
+    if (appointmentDate < currentDate) {
+        return bookings_interface_1.APPOINTMENT_STATUS.completed;
+    }
+    return appointment.status;
+};
 const corsHandler = (0, cors_1.default)({ origin: true });
 functions.http("getAppointments", async (req, res) => {
     corsHandler(req, res, async () => {
@@ -61,6 +70,7 @@ functions.http("getAppointments", async (req, res) => {
             });
             const appointmentsWithDoctors = appointments.map((appointment) => ({
                 ...appointment,
+                status: updateCompletedAppointment(appointment),
                 doctor: doctors[appointment.doctorId],
             }));
             return res.status(200).json({
