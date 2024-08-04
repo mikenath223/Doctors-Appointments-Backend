@@ -11,7 +11,6 @@ const corsHandler = cors({ origin: true });
 functions.http("findUserDependents", async (req: Request, res: Response) => {
   corsHandler(req, res, async () => {
     const { userId, limit, offset } = req.body;
-    const options: FindMany = { limit, offset };
 
     if (!userId) {
       res.status(400).json({
@@ -24,8 +23,6 @@ functions.http("findUserDependents", async (req: Request, res: Response) => {
       let query: FirebaseFirestore.Query = firestore
         .collection("user-dependents")
         .where("userId", "==", userId);
-
-      query = buildFirestoreQuery(query, options);
 
       const userDependentsSnapshot = await query.get();
       const userDependents: UserDependentInterface[] =

@@ -31,7 +31,7 @@ functions.http("getAppointments", async (req: Request, res: Response) => {
 
       appointmentsSnapshot.forEach((doc) => {
         const appointment = doc.data() as Appointments;
-        appointments.push(appointment);
+        appointments.push({ ...appointment, id: doc.id });
         doctorIds.add(appointment.doctorId);
       });
 

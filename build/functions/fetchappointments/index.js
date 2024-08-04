@@ -48,7 +48,7 @@ functions.http("getAppointments", async (req, res) => {
             const doctorIds = new Set();
             appointmentsSnapshot.forEach((doc) => {
                 const appointment = doc.data();
-                appointments.push(appointment);
+                appointments.push({ ...appointment, id: doc.id });
                 doctorIds.add(appointment.doctorId);
             });
             const doctorPromises = Array.from(doctorIds).map((doctorId) => firebase_1.firestore.collection("users").doc(doctorId).get());

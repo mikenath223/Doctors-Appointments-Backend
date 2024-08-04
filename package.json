@@ -8,13 +8,16 @@
     "start": "cross-env NODE_ENV=production node -r dotenv/config build/server.js",
     "factory:generate": "npx tsc && node runFactories.js",
     "factory:generate:profiles": "npx tsc && node runMockProfileUsersFactory.js",
-    "start:all": "npx tsc && concurrently \"npm run start:function1\" \"npm run start:function2\" \"npm run start:function3\" \"npm run start:function4\" \"npm run start:function5\" \"npm run start:function6\"",
+    "start:all": "npx tsc && concurrently \"npm run start:function1\" \"npm run start:function2\" \"npm run start:function3\" \"npm run start:function4\" \"npm run start:function5\" \"npm run start:function6\" \"npm run start:function7\" \"npm run start:function8\" \"npm run start:function9\"",
     "start:function1": "cross-env PORT=8080 npx @google-cloud/functions-framework --source=./build/functions/finddoctors --target=findManyDoctors",
     "start:function2": "cross-env PORT=8081 npx @google-cloud/functions-framework --source=./build/functions/getdoctorsdetails --target=getDoctorDetails",
     "start:function3": "cross-env PORT=8082 npx @google-cloud/functions-framework --source=./build/functions/bookappointment --target=bookAppointment",
     "start:function4": "cross-env PORT=8083 npx @google-cloud/functions-framework --source=./build/functions/fetchappointments --target=getAppointments",
     "start:function5": "cross-env PORT=8084 npx @google-cloud/functions-framework --source=./build/functions/findmockuserprofiles --target=findManyMockUserProfiles",
-    "start:function6": "cross-env PORT=8085 npx @google-cloud/functions-framework --source=./build/functions/finduserdependents --target=findUserDependents"
+    "start:function6": "cross-env PORT=8085 npx @google-cloud/functions-framework --source=./build/functions/finduserdependents --target=findUserDependents",
+    "start:function7": "cross-env PORT=8086 npx @google-cloud/functions-framework --source=./build/functions/adduserdependent --target=addUserDependent",
+    "start:function8": "cross-env PORT=8087 npx @google-cloud/functions-framework --source=./build/functions/cancelappointment --target=cancelAppointment",
+    "start:function9": "cross-env PORT=8088 npx @google-cloud/functions-framework --source=./build/functions/rescheduleappointment --target=rescheduleAppointment"
   },
   "author": "",
   "license": "ISC",
