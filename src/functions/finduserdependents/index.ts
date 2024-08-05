@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { firestore } from "../../firebase";
 import cors from "cors";
 import { UserDependentInterface } from "../../interfaces/user-dependent.interface";
-import { FindMany } from "../../interfaces/query.interface";
 import { buildFirestoreQuery } from "../../helper/build-query";
 
 const corsHandler = cors({ origin: true });
@@ -23,6 +22,8 @@ functions.http("findUserDependents", async (req: Request, res: Response) => {
       let query: FirebaseFirestore.Query = firestore
         .collection("user-dependents")
         .where("userId", "==", userId);
+
+      query = buildFirestoreQuery(query, { limit, offset });
 
       const userDependentsSnapshot = await query.get();
       const userDependents: UserDependentInterface[] =

@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const functions = __importStar(require("@google-cloud/functions-framework"));
 const firebase_1 = require("../../firebase");
 const cors_1 = __importDefault(require("cors"));
+const build_query_1 = require("../../helper/build-query");
 const corsHandler = (0, cors_1.default)({ origin: true });
 functions.http("findUserDependents", async (req, res) => {
     corsHandler(req, res, async () => {
@@ -43,6 +44,7 @@ functions.http("findUserDependents", async (req, res) => {
             let query = firebase_1.firestore
                 .collection("user-dependents")
                 .where("userId", "==", userId);
+            query = (0, build_query_1.buildFirestoreQuery)(query, { limit, offset });
             const userDependentsSnapshot = await query.get();
             const userDependents = userDependentsSnapshot.docs.map((doc) => doc.data());
             res.status(200).json(userDependents);
