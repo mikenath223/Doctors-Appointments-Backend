@@ -22,9 +22,7 @@ const createFakeMockUsers = async (numUsers = 10) => {
 createFakeMockUsers(50)
     .then(() => {
     console.log("Fake mockuser profiles generated and inserted into Firestore");
-    process.exit();
 })
     .catch((error) => {
     console.error("Error inserting fake mockuser profiles:", error);
-    process.exit(1);
 });
