@@ -72,9 +72,7 @@ const createFakeDoctors = async (numDoctors = 10) => {
 createFakeDoctors(100)
     .then(() => {
     console.log("Fake doctors data generated and inserted into Firestore");
-    process.exit();
 })
     .catch((error) => {
     console.error("Error inserting fake doctors data:", error);
-    process.exit(1);
 });

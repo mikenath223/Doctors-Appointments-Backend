@@ -1,9 +1,22 @@
 import * as functions from "@google-cloud/functions-framework";
 import { Request, Response } from "express";
 import { firestore } from "../../firebase";
-import { Appointments } from "../../interfaces/bookings.interface";
+import {
+  APPOINTMENT_STATUS,
+  Appointments,
+} from "../../interfaces/bookings.interface";
 import { UserInterface } from "../../interfaces/user.interface";
 import cors from "cors";
+
+const updateCompletedAppointment = (appointment: Appointments) => {
+  const currentDate = new Date();
+  const appointmentDate = new Date(appointment.date + "T" + appointment.time);
+  if (appointmentDate < currentDate) {
+    return APPOINTMENT_STATUS.completed;
+  }
+
+  return appointment.status;
+};
 
 const corsHandler = cors({ origin: true });
 
@@ -26,18 +39,12 @@ functions.http("getAppointments", async (req: Request, res: Response) => {
 
       const appointmentsSnapshot = await appointmentsRef.get();
 
-      if (appointmentsSnapshot.empty) {
-        return res.status(404).json({
-          msg: "No appointments found",
-        });
-      }
-
       const appointments: Appointments[] = [];
       const doctorIds: Set<string> = new Set();
 
       appointmentsSnapshot.forEach((doc) => {
         const appointment = doc.data() as Appointments;
-        appointments.push(appointment);
+        appointments.push({ ...appointment, id: doc.id });
         doctorIds.add(appointment.doctorId);
       });
 
@@ -56,6 +63,7 @@ functions.http("getAppointments", async (req: Request, res: Response) => {
 
       const appointmentsWithDoctors = appointments.map((appointment) => ({
         ...appointment,
+        status: updateCompletedAppointment(appointment),
         doctor: doctors[appointment.doctorId],
       }));
 

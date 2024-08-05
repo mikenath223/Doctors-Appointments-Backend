@@ -32,12 +32,26 @@ const bookings_interface_1 = require("../../interfaces/bookings.interface");
 const firestore_1 = require("@google-cloud/firestore");
 const cors_1 = __importDefault(require("cors"));
 const corsHandler = (0, cors_1.default)({ origin: true });
+const genMeetingLink = () => {
+    const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    let meetingLink = "https://zoom.us/j/";
+    for (let i = 0; i < 8; i++) {
+        meetingLink += chars.charAt(Math.floor(Math.random() * 36));
+    }
+    return meetingLink;
+};
 functions.http("bookAppointment", async (req, res) => {
     corsHandler(req, res, async () => {
-        const { doctorId, date, startTime, userId, purpose } = req.body;
-        if (!doctorId || !date || !startTime || !userId || !purpose) {
+        const { doctorId, date, startTime, userId, purpose, amountPaid, consultation, } = req.body;
+        if (!doctorId ||
+            !date ||
+            !startTime ||
+            !userId ||
+            !purpose ||
+            !amountPaid ||
+            !consultation) {
             res.status(400).json({
-                msg: "All fields (doctorId, date, startTime, userId, purpose) are required",
+                msg: "All fields (doctorId, date, startTime, userId, amountPaid, consultation, purpose) are required",
             });
             return;
         }
@@ -70,6 +84,9 @@ functions.http("bookAppointment", async (req, res) => {
                 time: startTime,
                 userId,
                 purpose,
+                amountPaid,
+                consultation,
+                meetingLink: genMeetingLink(),
                 status: bookings_interface_1.APPOINTMENT_STATUS.upcoming,
                 createdAt: firestore_1.Timestamp.now(),
                 updatedAt: firestore_1.Timestamp.now(),
