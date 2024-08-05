@@ -16,8 +16,8 @@ Follow these steps to set up and run the backend application locally.
 ### 1. Clone the Repository
 
 ```sh
-git clone https://github.com/Emmybritt/doctors-appointment-booking-backend.git
-cd doctors-appointment-booking-backend
+   git clone https://github.com/mikenath223/doctors-appointments-backend-extended.git
+   cd doctors-appointments-backend-extended
 ```
 
 ### 2. Create a Config Folder and Add Firebase Config
@@ -74,6 +74,11 @@ bookings-backend/
 │       ├── getdoctorsdetails/
 │       ├── bookappointment/
 │       └── fetchappointments/
+│       └── findmockuserprofiles/
+│       └── finduserdependents/
+│       └── adduserdependent/
+│       └── cancelappointment/
+│       └── rescheduleappointment/
 ├── config/
 │   └── fir-auth-311de-firebase-adminsdk-fydl1-322530e84e.json
 ├── src/
@@ -82,6 +87,11 @@ bookings-backend/
 │   │   ├── fetchappointments/
 │   │   ├── finddoctors/
 │   │   └── getdoctorsdetails/
+│   |   └── findmockuserprofiles/
+│   │   └── finduserdependents/
+│   │   └── adduserdependent/
+│   |   └── cancelappointment/
+│   |   └── rescheduleappointment/
 │   ├── helper/
 │   ├── factories/
 │   └── interfaces/
@@ -127,3 +137,48 @@ This function handles booking appointments with doctors. It accepts details such
 **Description:**
 
 This function retrieves all appointments for a specific patient or doctor. It can be filtered status (upcoming, past, canceled), and other relevant criteria. This allows users to view their scheduled appointments and manage them accordingly.
+
+### findManyMockUserProfiles
+
+**Path:** `src/functions/findmockuserprofiles`
+
+**Description:**
+
+This function is used to fetch a list of mock user profiles from a database. It can be used to create fake profiles for testing purposes. This allows users to easily create mock user profiles to be able to manage appointments for these profiles.
+
+### findUserDependents
+
+**Path:** `src/functions/finduserdependents`
+
+**Description:**
+
+This function is used to fetch a list of dependents for a specific user. It takes the user ID as input and fetches a list of profiles created by the user.
+
+### addUserDependent
+
+**Path:** `src/functions/adduserdependent`
+
+**Description:**
+
+This function is used to add a new dependent for a specific user. It recieves the user ID and the dependent ID. It can be used to add a profile for a user, enabling users to create profiles for their kids or other dependents.
+
+### cancelAppointment
+
+**Path:** `src/functions/cancelappointment`
+
+**Description:**
+
+This function is used to cancel an appointment for both the user and the user's added profiles. It takes details such as the appointment time slot and user ID and then frees up the appointment time slot for the doctor. It also enables users to receive refunds for appointments canceled. Appointments canceled can be refunded based on the following criteria:
+
+- The appointment was canceled more than 24 hours from the appointment then the user gets refunded 100% of the amount paid.
+- The appointment was canceled less than 24 hours from the appointment then the user gets refunded 50% of the amount paid.
+- The appointment was canceled less than 3 hours from the appointment then no refund is issued to the user.
+
+### rescheduleAppointment
+
+**Path:** `src/functions/rescheduleappointment`
+
+**Description:**
+
+This function is used to reschedule an appointment. It accepts details such as the patient’s information, new reschedule time slot, old appointment time slot and any specific requirements. It checks the availability of the doctor for the requested time slot, confirms the booking if the slot is available and then frees up the old appointment time slot for the doctor; otherwise, it returns an appropriate error message.
+
