@@ -131,7 +131,6 @@ functions.http("rescheduleAppointment", async (req: Request, res: Response) => {
         date: newDate,
         time: newTime,
         updatedAt: Timestamp.now(),
-        oldAvailableTimesId: oldAvailableTimesDoc.id,
       };
 
       res.status(200).json({
